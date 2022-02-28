@@ -12,11 +12,19 @@ namespace FileSender.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task EditFile(FileUpload file)
+        {
+            _dbContext.FileUploads.Update(file);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task<FileUpload> GetFileByGuid(Guid guid)
         {
             var file = await _dbContext.FileUploads.SingleOrDefaultAsync(file => file.Id == guid);
             if (file == null)
                 throw new ArgumentException("File with provided guid does not exist");
+            file.IsViewed = true;
+            await EditFile(file);
             return file;
         }
 

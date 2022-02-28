@@ -5,5 +5,6 @@
         //public string FileName { get; set; }
         public IFormFile FileContent { get; set; }
         public DateTime? UploadDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
     }
 }

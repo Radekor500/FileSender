@@ -9,5 +9,7 @@ namespace FileSender.EfModels
         public string FileName { get; set; } = null!;
         public byte[] FileContent { get; set; } = null!;
         public DateTime UploadDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public bool? IsViewed { get; set; }
     }
 }

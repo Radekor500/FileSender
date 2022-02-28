@@ -23,7 +23,7 @@ namespace FileSender.EfModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-BJHILMQ;Database=SendDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-BJHILMQ;Database=SendDb;Trusted_Connection=True;Database=SendDb;Trusted_Connection=True;");
             }
         }
 
@@ -35,9 +35,13 @@ namespace FileSender.EfModels
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
+                entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+
                 entity.Property(e => e.FileName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+
+                entity.Property(e => e.IsViewed).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UploadDate)
                     .HasColumnType("datetime")

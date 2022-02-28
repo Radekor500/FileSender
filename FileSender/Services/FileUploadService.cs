@@ -34,7 +34,7 @@ namespace FileSender.Services
                 file.FileContent.CopyTo(ms);
                 fileBytes = ms.ToArray();
             }
-            var uploadFile = new FileUpload() { FileName = file.FileContent.FileName, FileContent = fileBytes };
+            var uploadFile = new FileUpload() { FileName = file.FileContent.FileName, FileContent = fileBytes, ExpiryDate = file.ExpiryDate };
             var result = await _fileUploadRepository.UploadFile(uploadFile).ConfigureAwait(false);
             return result;
         }

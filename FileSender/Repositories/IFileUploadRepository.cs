@@ -6,6 +6,7 @@ namespace FileSender.Repositories
     {
         Task<FileUpload> GetFileByGuid(Guid guid);
         Task<FileUpload> UploadFile(FileUpload file);
+        Task EditFile(FileUpload file);
 
      
     }
