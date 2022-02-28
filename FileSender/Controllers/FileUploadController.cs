@@ -2,6 +2,8 @@
 using FileSender.EfModels;
 using FileSender.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using System.Web;
 
 namespace FileSender.Controllers
 {
@@ -38,7 +40,7 @@ namespace FileSender.Controllers
             try
             {
                 var result = await _fileUploadService.GetFileByGuid(guid).ConfigureAwait(false);
-                return Ok(result);
+                return File(result.FileContent, _fileUploadService.GetContentType(result.FileName), result.FileName);
             }
             catch (ArgumentException ex)
             {

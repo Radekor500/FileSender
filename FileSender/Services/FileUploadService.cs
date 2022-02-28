@@ -1,6 +1,7 @@
 ﻿using FileSender.DtoModels;
 using FileSender.EfModels;
 using FileSender.Repositories;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace FileSender.Services
 {
@@ -8,10 +9,16 @@ namespace FileSender.Services
     {
         private readonly IFileUploadRepository _fileUploadRepository;
 
+
         public FileUploadService(IFileUploadRepository fileUploadRepository)
         {
             _fileUploadRepository = fileUploadRepository;
         }
+
+        //private FileUploadDto MapToDto(FileUpload file)
+        //{
+        //    return new FileUploadDto() { FileName = file.FileName, FileContent };
+        //}
 
         public async Task<FileUpload> GetFileByGuid(Guid guid)
         {
@@ -27,9 +34,16 @@ namespace FileSender.Services
                 file.FileContent.CopyTo(ms);
                 fileBytes = ms.ToArray();
             }
-            var uploadFile = new FileUpload() { FileName = file.FileName, FileContent = fileBytes };
+            var uploadFile = new FileUpload() { FileName = file.FileContent.FileName, FileContent = fileBytes };
             var result = await _fileUploadRepository.UploadFile(uploadFile).ConfigureAwait(false);
             return result;
+        }
+
+        public string GetContentType(string fileName)
+        {
+            string contentType;
+            new FileExtensionContentTypeProvider().TryGetContentType(fileName, out contentType);
+            return contentType ?? "application/octet-stream";
         }
     }
 }

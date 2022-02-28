@@ -7,5 +7,6 @@ namespace FileSender.Services
     {
         Task<FileUpload> GetFileByGuid(Guid guid);
         Task<FileUpload> UploadFile(FileUploadDto file);
+        string GetContentType(string fileName);
     }
 }
