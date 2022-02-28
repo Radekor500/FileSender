@@ -1,4 +1,5 @@
-﻿using FileSender.EfModels;
+﻿using FileSender.DtoModels;
+using FileSender.EfModels;
 using FileSender.Repositories;
 
 namespace FileSender.Services
@@ -18,9 +19,16 @@ namespace FileSender.Services
            return result;
         }
 
-        public async Task<FileUpload> UploadFile(FileUpload file)
+        public async Task<FileUpload> UploadFile(FileUploadDto file)
         {
-            var result = await _fileUploadRepository.UploadFile(file).ConfigureAwait(false);
+            byte[] fileBytes;
+            using (var ms = new MemoryStream())
+            {
+                file.FileContent.CopyTo(ms);
+                fileBytes = ms.ToArray();
+            }
+            var uploadFile = new FileUpload() { FileName = file.FileName, FileContent = fileBytes };
+            var result = await _fileUploadRepository.UploadFile(uploadFile).ConfigureAwait(false);
             return result;
         }
     }

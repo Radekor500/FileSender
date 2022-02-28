@@ -1,10 +1,11 @@
-﻿using FileSender.EfModels;
+﻿using FileSender.DtoModels;
+using FileSender.EfModels;
 
 namespace FileSender.Services
 {
     public interface IFileUploadService
     {
         Task<FileUpload> GetFileByGuid(Guid guid);
-        Task<FileUpload> UploadFile(FileUpload file);
+        Task<FileUpload> UploadFile(FileUploadDto file);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FileSender.EfModels;
+﻿using FileSender.DtoModels;
+using FileSender.EfModels;
 using FileSender.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace FileSender.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile ([FromForm] FileUpload file)
+        public async Task<IActionResult> UploadFile ([FromForm] FileUploadDto file)
         {
             try
             {
