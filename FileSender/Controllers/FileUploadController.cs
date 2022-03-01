@@ -19,7 +19,7 @@ namespace FileSender.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile ([FromForm] FileUploadDto file)
+        public async Task<IActionResult> UploadFile ([FromForm] FileUploadForm file)
         {
             try
             {
@@ -39,8 +39,10 @@ namespace FileSender.Controllers
         {
             try
             {
-                var result = await _fileUploadService.GetFileByGuid(guid).ConfigureAwait(false);
-                return File(result.FileContent, _fileUploadService.GetContentType(result.FileName), result.FileName);
+                var result = await _fileUploadService.GetFilesByGuid(guid).ConfigureAwait(false);
+                //var test = result.FileContent.FirstOrDefault();
+                return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
+                //return Ok(result);
             }
             catch (ArgumentException ex)
             {
