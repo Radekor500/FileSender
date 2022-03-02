@@ -24,7 +24,7 @@ namespace FileSender.EfModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-BJHILMQ;Database=SendDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=SendDb;Trusted_Connection=False;User ID=SA;Password=lotekcezar1382");
             }
         }
 
@@ -46,7 +46,7 @@ namespace FileSender.EfModels
                     .WithMany(p => p.FileContents)
                     .HasForeignKey(d => d.FileUploadId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FileConte__FileU__5CD6CB2B");
+                    .HasConstraintName("FK__FileConte__FileU__2A4B4B5E");
             });
 
             modelBuilder.Entity<FileUpload>(entity =>
