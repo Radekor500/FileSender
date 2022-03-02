@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.grid-wrap {
+    height: 100vh;
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    // grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:  
+    "navbar navbar  navbar navbar navbar navbar"
+    "side side      menu menu     r      r "
+    "foot foot      foot foot    foot foot";
+}
+
+  // app-pdf-merge-form {
+  //   grid-area: menu;
+  // }
+
+  // router-outlet {
+  //   display: flex;
+  //   flex-direction: column;
+  // }
+
+  app-navbar {
+    // justify-self: start;
+    grid-area: navbar;
+    width: 100%;
+    // grid-column: 1/span;
+  }
+  .router-wrap {
+    grid-area: menu;
+  }

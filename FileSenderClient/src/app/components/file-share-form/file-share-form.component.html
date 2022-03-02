@@ -1,0 +1,17 @@
+<form (ngSubmit)="onSubmit()" #fileForm="ngForm" class="form-wrap">
+    <mat-form-field appearance="fill">
+        <div class="fileControl-wrapper">
+            <input matInput [(ngModel)]="uploadFileName" readonly name="File" />
+                <!-- <button mat-flat-button color="primary">Pick File</button> -->
+            <input type="file" #uploadControl id="fileControlInput" (change)="onFileChange($event)" name="fileControlInput"
+            multiple="multiple"/>
+        </div>   
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose expiration date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="expiryDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button  mat-flat-button color="accent" type="submit">Share files</button>  
+</form>
