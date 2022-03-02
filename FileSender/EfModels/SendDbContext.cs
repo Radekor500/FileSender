@@ -32,18 +32,18 @@ namespace FileSender.EfModels
         {
             modelBuilder.Entity<FileContent>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.FileContent1).HasColumnName("FileContent");
+                entity.HasKey(e => e.FileId);
 
                 entity.Property(e => e.FileId).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.FileContent1).HasColumnName("FileContent");
 
                 entity.Property(e => e.FileName)
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.FileUpload)
-                    .WithMany()
+                    .WithMany(p => p.FileContents)
                     .HasForeignKey(d => d.FileUploadId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FileConte__FileU__5CD6CB2B");
