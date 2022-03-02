@@ -12,12 +12,20 @@ namespace FileSender.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<FileContent>> GetFilesContentsByGuidAsync(Guid guid)
+        public async Task<IEnumerable<FileContent>> GetAllFilesContentsByGuidAsync(Guid guid)
         {
             var files = await _dbContext.FileContents.Where(x => x.FileUploadId == guid).ToListAsync();
             if (files == null)
                 throw new ArgumentException("File with provided guid does not exist");
             return files;
+        }
+
+        public async Task<FileContent> GetSingleFileContentsByGuid(Guid guid)
+        {
+            var file = await _dbContext.FileContents.Where(x => x.FileId == guid).FirstOrDefaultAsync();
+            if (file == null)
+                throw new ArgumentException("File with provided guid does not exist");
+            return file;
         }
 
         public async Task<FileContent> UploadFileContent(FileContent fileContent)

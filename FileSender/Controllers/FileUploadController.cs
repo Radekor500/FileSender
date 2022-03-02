@@ -34,15 +34,51 @@ namespace FileSender.Controllers
 
         }
 
-        [HttpGet("getfile")]
-        public async Task<IActionResult> GetFileByGuid(Guid guid)
+        [HttpGet("downloadall")]
+        public async Task<IActionResult> DownloadAllFilesByGuid(Guid guid)
         {
             try
             {
-                var result = await _fileUploadService.GetFilesByGuid(guid).ConfigureAwait(false);
+                var result = await _fileUploadService.DownloadAllFilesByGuid(guid).ConfigureAwait(false);
                 //var test = result.FileContent.FirstOrDefault();
-                return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
-                //return Ok(result);
+                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
+                return File(result, "application/zip", "archive.zip");
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("downloadsingle")]
+        public async Task<IActionResult> DownloadSingleFileByGuid(Guid guid)
+        {
+            try
+            {
+                var result = await _fileUploadService.DownloadSingleFilesByGuid(guid).ConfigureAwait(false);
+                //var test = result.FileContent.FirstOrDefault();
+                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
+                return File(result.FileContent1, _fileUploadService.GetContentType(result.FileName), result.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("listall")]
+        public async Task<IActionResult> ListAllFilesByGuid(Guid guid)
+        {
+            try
+            {
+                var result = await _fileUploadService.ListAllFilesByGuid(guid).ConfigureAwait(false);
+                //var test = result.FileContent.FirstOrDefault();
+                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
+                return Ok(result);
             }
             catch (ArgumentException ex)
             {

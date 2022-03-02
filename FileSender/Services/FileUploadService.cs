@@ -24,21 +24,27 @@ namespace FileSender.Services
         //    return new FileUploadDto() { FileName = file.FileName, FileContent };
         //}
 
-        private FileUploadDto BuildFileDto(IEnumerable<FileContent> fileContent, FileUpload fileUpload)
+        private IEnumerable<FileContentsDto> BuildFileList(IEnumerable<FileContent> fileContent)
         {
             //var fileUpload = await _fileUploadRepository.GetFileByGuid(guid);
             //var fileContent = await _fileContentsRepository.GetFilesContentsByGuidAsync(guid);
-            var fileContentDto = fileContent.Select(x => new FileContentsDto()
+            //var fileContentDto = fileContent.Select(x => new FileContentsDto()
+            //{
+            //    FileName = x.FileName,
+            //    FileData = x.FileContent1
+            //});
+            //return new FileUploadDto()
+            //{
+            //    FileContent = fileContentDto,
+            //    ExpiryDate = fileUpload.ExpiryDate,
+            //    UploadDate = fileUpload.UploadDate,
+            //};
+            var fileUploadDto = fileContent.Select(fileContent => new FileContentsDto()
             {
-                FileName = x.FileName,
-                FileData = x.FileContent1
+                FileName = fileContent.FileName,
+                FileId = fileContent.FileId,
             });
-            return new FileUploadDto()
-            {
-                FileContent = fileContentDto,
-                ExpiryDate = fileUpload.ExpiryDate,
-                UploadDate = fileUpload.UploadDate,
-            };
+            return fileUploadDto;
 
         }
 
@@ -61,20 +67,30 @@ namespace FileSender.Services
             }
         }
 
-        public async Task<byte[]> GetFilesByGuid(Guid guid)
+        //seperate endpoint to download all files as zip, download signle file, list files, change db to have unique id for file
+        public async Task<Byte[]> DownloadAllFilesByGuid(Guid guid)
         {
-            var result = await _fileContentsRepository.GetFilesContentsByGuidAsync(guid);
-            if (result.ToList().Count > 1)
-                return CreateZip(result);
-            return result.FirstOrDefault().FileContent1;
-            //return BuildFileDto(result, await _fileUploadRepository.GetFileByGuid(guid));
+            var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
+            return CreateZip(result);
+        }
+
+        public async Task<FileContent> DownloadSingleFilesByGuid(Guid guid)
+        {
+            var result = await _fileContentsRepository.GetSingleFileContentsByGuid(guid);
+            return result;
+        }
+
+        public async Task<IEnumerable<FileContentsDto>> ListAllFilesByGuid(Guid guid)
+        {
+            var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
+            return BuildFileList(result);
         }
 
         public async Task<FileUploadDto> UploadFile(FileUploadForm file)
         {
             List<FileContent> files = new List<FileContent>();
 
-            var uploadFile = new FileUpload() { FileContents = files, ExpiryDate = file.ExpiryDate };
+            var uploadFile = new FileUpload() { ExpiryDate = file.ExpiryDate };
             var result = await _fileUploadRepository.UploadFile(uploadFile).ConfigureAwait(false);
 
             using (var ms = new MemoryStream())
@@ -95,7 +111,7 @@ namespace FileSender.Services
                 await _fileContentsRepository.UploadFileContent(item);
             }
 
-            return BuildFileDto(await _fileContentsRepository.GetFilesContentsByGuidAsync(result.Id) ,result);
+            return new FileUploadDto() { UploadId = result.Id, UploadDate = result.UploadDate, ExpiryDate = result.ExpiryDate };
         }
 
         public string GetContentType(string fileName)
