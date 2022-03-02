@@ -19,7 +19,7 @@ namespace FileSender.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile ([FromForm] FileUploadDto file)
+        public async Task<IActionResult> UploadFile ([FromForm] FileUploadForm file)
         {
             try
             {
@@ -34,13 +34,45 @@ namespace FileSender.Controllers
 
         }
 
-        [HttpGet("getfile")]
-        public async Task<IActionResult> GetFileByGuid(Guid guid)
+        [HttpGet("downloadall")]
+        public async Task<IActionResult> DownloadAllFilesByGuid(Guid guid)
         {
             try
             {
-                var result = await _fileUploadService.GetFileByGuid(guid).ConfigureAwait(false);
-                return File(result.FileContent, _fileUploadService.GetContentType(result.FileName), result.FileName);
+                var result = await _fileUploadService.DownloadAllFilesByGuid(guid).ConfigureAwait(false);
+                return File(result, "application/zip", "archive.zip");
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("downloadsingle")]
+        public async Task<IActionResult> DownloadSingleFileByGuid(Guid guid)
+        {
+            try
+            {
+                var result = await _fileUploadService.DownloadSingleFilesByGuid(guid).ConfigureAwait(false);
+                return File(result.FileContent1, _fileUploadService.GetContentType(result.FileName), result.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("listall")]
+        public async Task<IActionResult> ListAllFilesByGuid(Guid guid)
+        {
+            try
+            {
+                var result = await _fileUploadService.ListAllFilesByGuid(guid).ConfigureAwait(false);
+                return Ok(result);
             }
             catch (ArgumentException ex)
             {
