@@ -40,8 +40,6 @@ namespace FileSender.Controllers
             try
             {
                 var result = await _fileUploadService.DownloadAllFilesByGuid(guid).ConfigureAwait(false);
-                //var test = result.FileContent.FirstOrDefault();
-                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
                 return File(result, "application/zip", "archive.zip");
             }
             catch (ArgumentException ex)
@@ -58,8 +56,6 @@ namespace FileSender.Controllers
             try
             {
                 var result = await _fileUploadService.DownloadSingleFilesByGuid(guid).ConfigureAwait(false);
-                //var test = result.FileContent.FirstOrDefault();
-                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
                 return File(result.FileContent1, _fileUploadService.GetContentType(result.FileName), result.FileName);
             }
             catch (ArgumentException ex)
@@ -76,8 +72,6 @@ namespace FileSender.Controllers
             try
             {
                 var result = await _fileUploadService.ListAllFilesByGuid(guid).ConfigureAwait(false);
-                //var test = result.FileContent.FirstOrDefault();
-                //return File(test.FileData, _fileUploadService.GetContentType(test.FileName), test.FileName);
                 return Ok(result);
             }
             catch (ArgumentException ex)

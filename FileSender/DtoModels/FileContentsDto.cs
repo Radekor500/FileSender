@@ -1,9 +1,9 @@
 ﻿namespace FileSender.DtoModels
 {
-
-    public class FileUploadDto
+    public class FileContentsDto
     {
-        public Guid UploadId { get; set; }
+        public string FileName { get; set; }
+        public Guid FileId { get; set; }
         public DateTime? UploadDate { get; set; }
         public DateTime? ExpiryDate { get; set; }
     }

@@ -19,26 +19,8 @@ namespace FileSender.Services
             _fileContentsRepository = fileContentsRepository;
         }
 
-        //private FileUploadDto MapToDto(FileUpload file)
-        //{
-        //    return new FileUploadDto() { FileName = file.FileName, FileContent };
-        //}
-
         private IEnumerable<FileContentsDto> BuildFileList(IEnumerable<FileContent> fileContent)
         {
-            //var fileUpload = await _fileUploadRepository.GetFileByGuid(guid);
-            //var fileContent = await _fileContentsRepository.GetFilesContentsByGuidAsync(guid);
-            //var fileContentDto = fileContent.Select(x => new FileContentsDto()
-            //{
-            //    FileName = x.FileName,
-            //    FileData = x.FileContent1
-            //});
-            //return new FileUploadDto()
-            //{
-            //    FileContent = fileContentDto,
-            //    ExpiryDate = fileUpload.ExpiryDate,
-            //    UploadDate = fileUpload.UploadDate,
-            //};
             var fileUploadDto = fileContent.Select(fileContent => new FileContentsDto()
             {
                 FileName = fileContent.FileName,
@@ -98,8 +80,6 @@ namespace FileSender.Services
                 foreach (var item in file.FileContent)
                 {
                     item.CopyTo(ms);
-                    //files.Add(ms.ToArray());
-                    //ms.SetLength(0);
                     files.Add(new FileContent() { FileContent1 = ms.ToArray(), FileName = item.FileName, FileUploadId = result.Id });
                     ms.SetLength(0);
                 }

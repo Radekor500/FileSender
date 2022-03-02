@@ -15,7 +15,7 @@ namespace FileSender.Repositories
         public async Task<IEnumerable<FileContent>> GetAllFilesContentsByGuidAsync(Guid guid)
         {
             var files = await _dbContext.FileContents.Where(x => x.FileUploadId == guid).ToListAsync();
-            if (files == null)
+            if (files.Count == 0)
                 throw new ArgumentException("File with provided guid does not exist");
             return files;
         }
