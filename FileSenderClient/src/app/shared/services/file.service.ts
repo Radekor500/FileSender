@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FileDownloadModel } from './models/fileDownloadModel';
 import { FileModel } from './models/fileModel';
 
 @Injectable({
@@ -29,9 +30,9 @@ export class FileService {
       responseType: "blob" as 'json'})
   }
 
-  listAll(guid: string) : Observable<FileModel> {
+  listAll(guid: string) : Observable<FileDownloadModel> {
     const params = new HttpParams().set('guid', guid);
-    return this.http.get<FileModel>(`${environment.apiUrl}FileUpload/upload`, {params: params});
+    return this.http.get<FileDownloadModel>(`${environment.apiUrl}FileUpload/listall`, {params: params});
   }
   
 }

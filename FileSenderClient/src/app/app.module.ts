@@ -13,18 +13,21 @@ import { MatInputModule } from '@angular/material/input';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatDialogActions, MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from "@angular/common/http";
 import { DialogComponent } from './components/dialog/dialog.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { FileDownloadComponent } from './components/file-download/file-download.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileShareFormComponent,
     NavbarComponent,
-    DialogComponent
+    DialogComponent,
+    FileDownloadComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatDialogModule,
     MatIconModule,
     ClipboardModule,
+    MatTableModule,
     FormsModule    
   ],
   providers: [],

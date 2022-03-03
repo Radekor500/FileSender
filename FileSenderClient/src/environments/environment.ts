@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://localhost:7033/API/',
-  shareUrl: 'http://localhost:4200/?guid='
+  shareUrl: 'http://localhost:4200/files/'
 };
 
 /*
