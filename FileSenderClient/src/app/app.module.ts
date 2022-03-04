@@ -40,6 +40,7 @@ import {MatTableModule} from '@angular/material/table';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     MatDialogModule,
     MatIconModule,

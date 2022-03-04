@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { FileService } from 'src/app/shared/services/file.service';
 import { environment } from 'src/environments/environment';
@@ -13,18 +13,23 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class FileShareFormComponent implements OnInit {
 
   @ViewChild('uploadControl') uploadControl!: ElementRef;
-  uploadFileName = 'Choose File';
-  expiryDate = new FormControl(null)
-  constructor(private fileService: FileService, private dialog: MatDialog) { }
+  date: Date = new Date();
+  constructor(private fileService: FileService, private dialog: MatDialog, private fb: FormBuilder) { }
+
+  fileForm: FormGroup = this.fb.group({
+    uploadFileName: ["Choose files", Validators.required],
+    expiryDate: [null, Validators.required]
+  })
 
   onFileChange(e: any) {
 
     if (e.target.files && e.target.files[0]) {
 
-      this.uploadFileName = '';
+      let fileStr = '';
       Array.from(e.target.files).forEach((file: any) => {
-        this.uploadFileName += file.name + ',';
+        fileStr += file.name + ',';
       });
+      this.fileForm.controls['uploadFileName'].patchValue(fileStr);
     }
 
     // let fake = document.getElementById('fake') as any;
@@ -35,13 +40,14 @@ export class FileShareFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.fileForm.valid);
     const formData = new FormData();
     let files = this.uploadControl.nativeElement.files;
     Object.keys(files).forEach(key => {
       console.log(files[key])
       formData.append("FileContent", files[key]);
     });
-    formData.append("ExpiryDate", new Date(this.expiryDate.value).toISOString());
+    formData.append("ExpiryDate", new Date(this.fileForm.controls['expiryDate'].value).toISOString());
 
     this.fileService.uploadFiles(formData).subscribe(resp => {
       console.log(resp);
@@ -50,6 +56,7 @@ export class FileShareFormComponent implements OnInit {
           uploadId: `${environment.shareUrl}${resp.uploadId}`
         }
       })
+      this.fileForm.reset();
     })
   }
 

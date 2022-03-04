@@ -64,8 +64,13 @@ namespace FileSender.Services
 
         public async Task<IEnumerable<FileContentsDto>> ListAllFilesByGuid(Guid guid)
         {
-            var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
-            return BuildFileList(result);
+            var dateCheck = await _fileUploadRepository.GetFileByGuid(guid);
+            if (dateCheck.ExpiryDate > DateTime.Now)
+            {
+                var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
+                return BuildFileList(result);
+            }
+            throw new ArgumentException("Files have already expired");
         }
 
         public async Task<FileUploadDto> UploadFile(FileUploadForm file)
