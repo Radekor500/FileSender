@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { FileService } from 'src/app/shared/services/file.service';
-import { FileDownloadModel } from 'src/app/shared/services/models/fileDownloadModel';
-import { FileModel } from 'src/app/shared/services/models/fileModel';
+import { FileDownloadModel } from 'src/app/shared/models/fileDownloadModel';
+import { FileModel } from 'src/app/shared/models/fileModel';
 
 
 @Component({

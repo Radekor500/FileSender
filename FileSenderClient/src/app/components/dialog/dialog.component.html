@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Here's your link to share files:</h1>
+<h1 mat-dialog-title>{{ data.title }}</h1>
 <div mat-dialog-content>
-    <p>{{ data.uploadId }}</p>
+    <p>{{ data.content }}</p>
 </div>
 <div mat-dialog-actions>
     <button mat-flat-button mat-dialog-close color="warn">Close</button>
-    <button [cdkCopyToClipboard]="data.uploadId" mat-icon-button aria-label="Copy to clipboard">
+    <button *ngIf="data.copy" [cdkCopyToClipboard]="data.content" mat-icon-button aria-label="Copy to clipboard">
         <mat-icon>file_copy</mat-icon>
       </button>
 </div>

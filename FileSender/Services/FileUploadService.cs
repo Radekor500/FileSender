@@ -65,7 +65,7 @@ namespace FileSender.Services
         public async Task<IEnumerable<FileContentsDto>> ListAllFilesByGuid(Guid guid)
         {
             var dateCheck = await _fileUploadRepository.GetFileByGuid(guid);
-            if (dateCheck.ExpiryDate > DateTime.Now)
+            if (dateCheck.ExpiryDate > DateTime.Now || dateCheck.ExpiryDate == null)
             {
                 var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
                 return BuildFileList(result);
