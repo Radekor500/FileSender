@@ -20,6 +20,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FileDownloadComponent } from './components/file-download/file-download.component';
 import {MatTableModule} from '@angular/material/table';
+import { HighlightDirective } from './shared/directives/highlight.directive';
+import { LoaderComponent } from './components/loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import {MatTableModule} from '@angular/material/table';
     FileShareFormComponent,
     NavbarComponent,
     DialogComponent,
-    FileDownloadComponent
+    FileDownloadComponent,
+    HighlightDirective,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ import {MatTableModule} from '@angular/material/table';
     MatIconModule,
     ClipboardModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     FormsModule    
   ],
   providers: [],
