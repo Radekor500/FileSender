@@ -18,7 +18,7 @@ export class FileShareFormComponent implements OnInit {
 
   fileForm: FormGroup = this.fb.group({
     uploadFileName: ["Choose files", Validators.required],
-    expiryDate: [null, Validators.required]
+    expiryDate: [null]
   })
 
   onFileChange(e: any) {
@@ -53,7 +53,9 @@ export class FileShareFormComponent implements OnInit {
       console.log(resp);
       this.dialog.open(DialogComponent, {
         data: {
-          uploadId: `${environment.shareUrl}${resp.uploadId}`
+          content: `${environment.shareUrl}${resp.uploadId}`,
+          title: "Here's your link to share files:",
+          copy: true
         }
       })
       this.fileForm.reset();
