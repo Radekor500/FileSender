@@ -12,10 +12,18 @@ const files: Ref<FileDownloadModel[]> = ref([]);
 const route = useRoute();
 
 onMounted(async () => {
-    let resp = await http.listAll(route.params.guid as string);
-    files.value = resp.data;
+    try {
+        let resp = await http.listAll(route.params.guid as string);
+        files.value = resp.data;
+    } catch (error) {
+        alert(error)
+    }
+    
+    
 
 })
+
+
 
 const generateLink = (response: any, filename: string): void  => {
     let dataType = response.type;

@@ -4,7 +4,7 @@ import FileDownload from '../views/fileDownload.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {path: '/', component: FileShare},
-  {path: '/files/:guid', component: FileDownload}
+  {path: '/files/:guid', component: FileDownload, beforeEnter: GuidResolver}
 ]
 
 const router = createRouter({
