@@ -24,7 +24,7 @@ namespace FileSender.EfModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=172.17.210.69,1433;Database=SendDb;Trusted_Connection=False;User ID=SA;Password=Lotekcez@r1382");
+                optionsBuilder.UseSqlServer("Server=172.27.170.8,1433;Database=SendDb;Trusted_Connection=False;User ID=SA;Password=Lotekcez@r1382");
             }
         }
 
