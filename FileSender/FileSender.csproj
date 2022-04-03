@@ -4,19 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<SpaRoot>ClientApp\</SpaRoot>
 	<SpaProxyServerUrl>http://localhost:4200/</SpaProxyServerUrl>
-	<SpaProxyLaunchCommand>ng serve</SpaProxyLaunchCommand>
+	<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <UserSecretsId>a06309ba-2023-44da-bae1-f378025729c3</UserSecretsId>
   </PropertyGroup>
 	
 	<ItemGroup>
 		<!-- Don't publish the SPA source files, but do show them in the project files list -->
-		<Compile Remove="NewFolder\**" />
 		<Content Remove="$(SpaRoot)**" />
-		<Content Remove="NewFolder\**" />
-		<EmbeddedResource Remove="NewFolder\**" />
 		<None Remove="$(SpaRoot)**" />
-		<None Remove="NewFolder\**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 	</ItemGroup>
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -32,7 +29,7 @@
 	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-		<Exec WorkingDirectory="$(SpaRoot)" Command="ng build" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
 
 		<!-- Include the newly-built files in the publish output -->
 		<ItemGroup>
