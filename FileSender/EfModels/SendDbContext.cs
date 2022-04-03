@@ -21,7 +21,7 @@ namespace FileSender.EfModels
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "Lotekcez@r1382";
+            var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "password";
             var dbServer = Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost";
             var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "1433";
             var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "SA";
