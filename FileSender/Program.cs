@@ -2,6 +2,7 @@ using FileSender.EfModels;
 using FileSender.Repositories;
 using FileSender.Services;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,5 +66,11 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 //app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<SendDbContext>();
+    dataContext.Database.Migrate();
+}
 
 app.Run();
