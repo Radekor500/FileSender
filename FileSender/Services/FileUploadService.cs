@@ -67,8 +67,8 @@ namespace FileSender.Services
             var dateCheck = await _fileUploadRepository.GetFileByGuid(guid);
             if (dateCheck.ExpiryDate > DateTime.Now || dateCheck.ExpiryDate == null)
             {
-                var result = await _fileContentsRepository.GetAllFilesContentsByGuidAsync(guid);
-                return BuildFileList(result);
+                var result = await _fileContentsRepository.GetAllFilesContentsNamesByGuidAsync(guid);
+                return result;
             }
             throw new ArgumentException("Files have already expired");
         }
