@@ -1,4 +1,5 @@
-﻿using FileSender.EfModels;
+﻿using FileSender.DtoModels;
+using FileSender.EfModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileSender.Repositories
@@ -18,6 +19,14 @@ namespace FileSender.Repositories
             if (files.Count == 0)
                 throw new ArgumentException("File with provided guid does not exist");
             return files;
+        }
+
+        public async Task<IEnumerable<FileContentsDto>> GetAllFilesContentsNamesByGuidAsync(Guid guid)
+        {
+            var files = await _dbContext.FileContents.Where(x => x.FileUploadId == guid).Select(x => new {x.FileName, x.FileId}).ToListAsync();
+            if (files.Count == 0)
+                throw new ArgumentException("File with provided guid does not exist");
+            return files.Select(x => new FileContentsDto() { FileName = x.FileName, FileId = x.FileId});
         }
 
 

@@ -1,4 +1,5 @@
-﻿using FileSender.EfModels;
+﻿using FileSender.DtoModels;
+using FileSender.EfModels;
 
 namespace FileSender.Repositories
 {
@@ -7,5 +8,7 @@ namespace FileSender.Repositories
         Task<IEnumerable<FileContent>> GetAllFilesContentsByGuidAsync(Guid guid);
         Task<FileContent> GetSingleFileContentsByGuid(Guid guid);
         Task<FileContent> UploadFileContent(FileContent fileContent);
+
+        Task<IEnumerable<FileContentsDto>> GetAllFilesContentsNamesByGuidAsync(Guid guid);
     }
 }
