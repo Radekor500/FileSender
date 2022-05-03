@@ -14,7 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { DialogComponent } from './components/dialog/dialog.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -23,6 +23,10 @@ import {MatTableModule} from '@angular/material/table';
 import { HighlightDirective } from './shared/directives/highlight.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
+import { LoaderService } from './shared/services/loader.service';
+import { LoaderInterceptor } from './shared/services/interceptors/loader-interceptor.service';
+import { ErrorInterceptor } from './shared/services/interceptors/error-interceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -52,9 +56,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ClipboardModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     FormsModule    
   ],
-  providers: [],
+  providers: [
+    LoaderService, 
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   entryComponents: [DialogComponent],
   bootstrap: [AppComponent]
 })

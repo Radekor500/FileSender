@@ -8,13 +8,12 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 })
 export class LoaderComponent implements OnInit {
 
-  display!: string
+  display!: boolean
 
   constructor(private loaderService: LoaderService) {
 
     this.loaderService.isLoading.subscribe((v) => {
-      console.log(v);
-      v ? this.display = "block" : this.display = "none";
+      this.display = v;
     });
    }
 

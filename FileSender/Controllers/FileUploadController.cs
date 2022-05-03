@@ -1,5 +1,4 @@
-﻿using FileSender.Bindings;
-using FileSender.DtoModels;
+﻿using FileSender.DtoModels;
 using FileSender.EfModels;
 using FileSender.Services;
 using Microsoft.AspNetCore.Mvc;

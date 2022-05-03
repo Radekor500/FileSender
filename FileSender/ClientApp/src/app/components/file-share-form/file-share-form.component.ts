@@ -59,7 +59,8 @@ export class FileShareFormComponent implements OnInit {
         }
       })
       this.fileForm.reset();
-    })
+    }
+    )
   }
 
   ngOnInit(): void {
