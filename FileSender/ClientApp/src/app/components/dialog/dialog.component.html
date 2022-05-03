@@ -4,7 +4,7 @@
 </div>
 <div mat-dialog-actions>
     <button mat-flat-button mat-dialog-close color="warn">Close</button>
-    <button *ngIf="data.copy" [cdkCopyToClipboard]="data.content" mat-icon-button aria-label="Copy to clipboard">
+    <button *ngIf="data.copy" [cdkCopyToClipboard]="data.content" (cdkCopyToClipboardCopied)="showSnackbar()" mat-icon-button aria-label="Copy to clipboard">
         <mat-icon>file_copy</mat-icon>
       </button>
 </div>

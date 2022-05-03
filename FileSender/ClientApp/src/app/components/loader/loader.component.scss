@@ -1,0 +1,20 @@
+#spinner {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    overflow: hidden;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    #spinner {
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      background-color: rgba(255, 255, 255, 0.025);  
+    }
+  }
