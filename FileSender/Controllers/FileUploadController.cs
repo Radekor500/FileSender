@@ -1,8 +1,10 @@
-﻿using FileSender.DtoModels;
+﻿using FileSender.Bindings;
+using FileSender.DtoModels;
 using FileSender.EfModels;
 using FileSender.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Web;
 
 namespace FileSender.Controllers
@@ -18,6 +20,8 @@ namespace FileSender.Controllers
             _fileUploadService = fileUploadService;
         }
 
+        [RequestSizeLimit(2000000000)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 2000000000)]
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile ([FromForm] FileUploadForm file)
         {
@@ -80,6 +84,24 @@ namespace FileSender.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        //[DisableFormValueModelBinding]
+        //[RequestSizeLimit(2000000000)]
+        //[RequestFormLimits(MultipartBodyLengthLimit = 2000000000)]
+        [HttpPost("upload2")]
+        public async Task<IActionResult> ReceiveFile(IFormFile file)
+        {
+           
+            var reader = new MultipartReader("Content - Type: application / json; charset = utf - 8",Request.Body);
+
+            // note: this is for a single file, you could also process multiple files
+            var section = await reader.ReadNextSectionAsync();
+
+           
+
+            using var fileStream = section.Body;
+            return Ok();
         }
 
 
