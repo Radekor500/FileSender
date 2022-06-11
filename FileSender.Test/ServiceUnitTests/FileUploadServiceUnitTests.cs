@@ -32,9 +32,7 @@ namespace FileSender.Test.ServiceUnitTests
         [TearDown]
         public void TearDown()
         {
-            _dbContext.FileContents.RemoveRange(_dbContext.FileContents);
-            _dbContext.FileUploads.RemoveRange(_dbContext.FileUploads);
-            _dbContext.SaveChanges();
+            _dbContext.Database.EnsureDeleted();
         }
 
         private void SeedDb()
